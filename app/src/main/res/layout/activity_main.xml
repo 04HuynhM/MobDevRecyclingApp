@@ -6,34 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.example.martin.recyclingapp.MainActivity">
 
-    <Button
-        android:id="@+id/scanBarcodeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="scanBarcode"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:title="RECYCLE"
+        app:titleTextColor="@color/text_dark" />
 
-    <TextView
-        android:id="@+id/barcodeText"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_main"
+        app:tabIndicatorColor="@color/text_dark"
+        app:tabSelectedTextColor="@color/text_dark"
+        app:tabTextColor="@color/text_dark_secondary" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_main_activity"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_scan_main_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:scaleType="center"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_camera_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
