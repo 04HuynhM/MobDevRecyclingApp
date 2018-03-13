@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "441636667670",
+    "firebase_url": "https://recycling-app-hkr.firebaseio.com",
+    "project_id": "recycling-app-hkr",
+    "storage_bucket": "recycling-app-hkr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441636667670:android:c1ab0b2cc82d97ca",
+        "android_client_info": {
+          "package_name": "com.example.martin.recyclingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441636667670-k151oejih2epbjs6ajob2i510o0seth1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.martin.recyclingapp",
+            "certificate_hash": "9239e93f325b330d483ba571f4fc6cda5998580a"
+          }
+        },
+        {
+          "client_id": "441636667670-q16l4jgppr28fcblr52a39fggd08lhvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG2EKBTNtQxMimJhAHM6s5XFhetGKkDYI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441636667670-q16l4jgppr28fcblr52a39fggd08lhvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

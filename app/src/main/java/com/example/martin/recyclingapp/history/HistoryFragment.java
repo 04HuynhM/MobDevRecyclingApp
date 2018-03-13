@@ -1,4 +1,4 @@
-package com.example.martin.recyclingapp.History;
+package com.example.martin.recyclingapp.history;
 
 import android.app.Fragment;
 import android.os.Bundle;
