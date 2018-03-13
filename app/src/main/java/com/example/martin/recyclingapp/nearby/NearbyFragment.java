@@ -1,4 +1,4 @@
-package com.example.martin.recyclingapp.Nearby;
+package com.example.martin.recyclingapp.nearby;
 
 import android.app.Fragment;
 import android.os.Bundle;

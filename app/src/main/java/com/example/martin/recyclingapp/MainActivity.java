@@ -7,23 +7,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.martin.recyclingapp.Adapters.MainActivityPagerAdapter;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.example.martin.recyclingapp.adapters.MainActivityPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
-
-    TabLayout tabLayout;
-    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tabLayout = findViewById(R.id.tab_layout_main_activity);
-        fab = findViewById(R.id.fab_scan_main_activity);
+        TabLayout tabLayout = findViewById(R.id.tab_layout_main_activity);
+        FloatingActionButton fab = findViewById(R.id.fab_scan_main_activity);
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_overall));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_nearby));
@@ -33,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.view_pager_main_activity);
         viewPager.setOverScrollMode(ViewPager.OVER_SCROLL_NEVER);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("uid", getIntent().getStringExtra("uid"));
+
         final MainActivityPagerAdapter pagerAdapter =
                 new MainActivityPagerAdapter(getFragmentManager(),
-                        tabLayout.getTabCount());
+                        tabLayout.getTabCount(),
+                        bundle);
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -57,12 +57,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivityForResult(intent, 0);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+            startActivityForResult(intent, 0);
         });
     }
 
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Barcode barcode = data.getParcelableExtra("barcode");
                 }
                 else{
+                    //TODO
                 }
             }
         }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.martin.recyclingapp.sign.LoginActivity">
+
+    <EditText
+        android:id="@+id/edit_email_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <EditText
+        android:id="@+id/edit_password_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Password"
+        app:layout_constraintEnd_toEndOf="@id/edit_email_login"
+        app:layout_constraintStart_toStartOf="@id/edit_email_login"
+        app:layout_constraintTop_toBottomOf="@id/edit_email_login"/>
+    <Button
+        android:id="@+id/button_sign_in_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="sign in"
+        app:layout_constraintEnd_toEndOf="@id/edit_password_login"
+        app:layout_constraintTop_toBottomOf="@id/edit_password_login"/>
+
+    <TextView
+        android:id="@+id/text_label_not_registered_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="serif-sans-light"
+        android:text="Not registered?"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/text_button_register_login"
+        app:layout_constraintEnd_toEndOf="@id/text_button_register_login"
+        app:layout_constraintStart_toStartOf="@id/text_button_register_login"/>
+
+    <TextView
+        android:id="@+id/text_button_register_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Click here to register."
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
