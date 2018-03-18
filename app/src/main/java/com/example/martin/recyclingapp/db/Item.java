@@ -14,7 +14,10 @@ public class Item {
     private String productMaterial;
     private Date dateScanned;
 
-    public Item(String barcodeNumber, String productName, String productMaterial, Date dateScanned){
+    public Item(String barcodeNumber,
+                String productName,
+                String productMaterial,
+                Date dateScanned) {
         this.barcodeNumber = barcodeNumber;
         this.productName = productName;
         this.productMaterial = productMaterial;

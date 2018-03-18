@@ -74,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode==0){
-            if(resultCode== CommonStatusCodes.SUCCESS){
-                if(data!=null){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==0) {
+            if(resultCode== CommonStatusCodes.SUCCESS) {
+                if(data!=null) {
 
 //                    Barcode barcode = data.getParcelableExtra("barcode");
                     FragmentManager fragmentManager = getFragmentManager();
@@ -88,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
                     transaction.replace(android.R.id.content, resultFragment)
                             .addToBackStack(null).commit();
-
                 }
-                else{
+                else {
                     //TODO
                 }
             }
