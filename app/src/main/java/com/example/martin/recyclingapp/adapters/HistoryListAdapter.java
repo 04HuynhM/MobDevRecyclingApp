@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * Created by martinhuynh on 17/03/2018.
  */
 
-public class HistoryListAdapterRV extends RecyclerView.Adapter<HistoryListAdapterRV.HistoryViewHolder>{
+public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.HistoryViewHolder> {
 
     private LayoutInflater inflator;
     private ArrayList<Item> items;
 
-    public HistoryListAdapterRV(Context context, ArrayList<Item> items){
+    public HistoryListAdapter(Context context, ArrayList<Item> items) {
         inflator = LayoutInflater.from(context);
         this.items = items;
     }
@@ -51,7 +51,7 @@ public class HistoryListAdapterRV extends RecyclerView.Adapter<HistoryListAdapte
         return 0;
     }
 
-    class HistoryViewHolder extends RecyclerView.ViewHolder{
+    class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         TextView productName;
         TextView productMaterial;
