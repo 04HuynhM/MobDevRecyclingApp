@@ -1,12 +1,22 @@
 package com.example.martin.recyclingapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.example.martin.recyclingapp.adapters.MainActivityPagerAdapter;
@@ -68,7 +78,17 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==0){
             if(resultCode== CommonStatusCodes.SUCCESS){
                 if(data!=null){
-                    Barcode barcode = data.getParcelableExtra("barcode");
+
+//                    Barcode barcode = data.getParcelableExtra("barcode");
+                    FragmentManager fragmentManager = getFragmentManager();
+                    ResultFragment resultFragment = new ResultFragment();
+
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+                    transaction.replace(android.R.id.content, resultFragment)
+                            .addToBackStack(null).commit();
+
                 }
                 else{
                     //TODO
@@ -79,5 +99,4 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
 }
