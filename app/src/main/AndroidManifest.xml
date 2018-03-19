@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.martin.recyclingapp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -17,6 +19,9 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBqayXqbxZIeBIqzmwtlWbGvd4TrbD8Dps" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -26,7 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CameraActivity" />
-        <activity android:name=".FirebaseTestActivity" />
         <activity android:name=".sign.LoginActivity"></activity>
     </application>
 
