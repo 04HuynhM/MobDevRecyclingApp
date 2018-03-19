@@ -17,6 +17,8 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+        Bundle bundle = getArguments();
+        String scannedBarcode = bundle.getString("barcode");
         return view;
     }
 
