@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.db.Item;
+import com.facebook.share.widget.ShareButton;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,8 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         TextView dateScanned;
         ImageView productImage;
         ImageView productClass;
+        ShareButton shareButton;
+
 
         public HistoryViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +69,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             dateScanned = itemView.findViewById(R.id.historyScanDate);
             productImage = itemView.findViewById(R.id.productHistoryImage);
             productClass = itemView.findViewById(R.id.historyClassImage);
+            shareButton = itemView.findViewById(R.id.historyShareButton);
         }
     }
 }
