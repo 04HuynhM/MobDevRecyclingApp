@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -27,6 +28,11 @@ public class ResultFragment extends Fragment {
     ShareButton shareButton;
     CallbackManager callbackManager;
     ShareDialog dialog;
+    TextView productName;
+    TextView category;
+    TextView dateScanned;
+    TextView barcode;
+    TextView material;
 
     @Nullable
     @Override
@@ -35,12 +41,36 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
         Bundle bundle = getArguments();
+
         String scannedBarcode = bundle.getString("barcode");
 
         shareButton = view.findViewById(R.id.resultShareButton);
+        productName = view.findViewById(R.id.resultProductNameTextView);
+        category = view.findViewById(R.id.resultProductCategoryTextView);
+        dateScanned = view.findViewById(R.id.resultDateTextView);
+        barcode = view.findViewById(R.id.resultBarcodeTextView);
+        material = view.findViewById(R.id.resultProductMaterialTextView);
+
+        if(bundle.containsKey("name")) {
+
+            productName.setText(bundle.getString("name"));
+            category.setText(bundle.getString("category"));
+            barcode.setText(bundle.getString("barcode"));
+            material.setText(bundle.getString("material"));
+            dateScanned.setText(bundle.getString("dateScanned"));
+
+        }
+
+        else {
+
+            // firebase get logic goes here
+
+        }
 
         callbackManager = CallbackManager.Factory.create();
         dialog = new ShareDialog(getActivity());
+
+        shareButton.setShareContent(getLinkContent());
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +85,6 @@ public class ResultFragment extends Fragment {
 
                     @Override
                     public void onCancel() {
-
                     }
 
                     @Override
@@ -65,9 +94,6 @@ public class ResultFragment extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-                shareButton.setShareContent(getLinkContent());
 
                 if (dialog.canShow(ShareLinkContent.class)) {
                     dialog.show(getLinkContent());
