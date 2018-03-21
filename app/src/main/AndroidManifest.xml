@@ -51,6 +51,12 @@
         </activity>
         <activity android:name=".CameraActivity" />
         <activity android:name=".sign.LoginActivity"></activity>
+
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider{995991727206762}"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
