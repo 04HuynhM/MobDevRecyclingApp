@@ -1,5 +1,7 @@
 package com.example.martin.recyclingapp.db;
 
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -12,6 +14,7 @@ public class Item {
     private String productName;
     private String barcodeNumber;
     private String productMaterial;
+    private String category;
     private Date dateScanned;
 
     public Item(String barcodeNumber,
@@ -22,6 +25,10 @@ public class Item {
         this.productName = productName;
         this.productMaterial = productMaterial;
         this.dateScanned = dateScanned;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getTitle() {
