@@ -21,7 +21,7 @@
             android:value="barcode" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBqayXqbxZIeBIqzmwtlWbGvd4TrbD8Dps" />
+            android:value="@string/maps_app_key" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -12,6 +12,7 @@
     <string name="materials">Materials</string>
     <string name="dismiss">Dismiss</string>
     <string name="facebook_app_id">995991727206762</string>
+    <string name="maps_app_key">AIzaSyBqayXqbxZIeBIqzmwtlWbGvd4TrbD8Dps</string>
     <string name="fb_login_protocol_scheme">fb995991727206762</string>
 
 </resources>
