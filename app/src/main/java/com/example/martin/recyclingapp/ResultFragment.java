@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
@@ -25,33 +24,25 @@ import com.facebook.share.widget.ShareDialog;
 
 public class ResultFragment extends Fragment {
 
-    ShareButton shareButton;
-    CallbackManager callbackManager;
-    ShareDialog dialog;
-    TextView productName;
-    TextView category;
-    TextView dateScanned;
-    TextView barcode;
-    TextView material;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+
         Bundle bundle = getArguments();
 
         String scannedBarcode = bundle.getString("barcode");
 
-        shareButton = view.findViewById(R.id.resultShareButton);
-        productName = view.findViewById(R.id.resultProductNameTextView);
-        category = view.findViewById(R.id.resultProductCategoryTextView);
-        dateScanned = view.findViewById(R.id.resultDateTextView);
-        barcode = view.findViewById(R.id.resultBarcodeTextView);
-        material = view.findViewById(R.id.resultProductMaterialTextView);
+        ShareButton shareButton = view.findViewById(R.id.resultShareButton);
+        TextView productName = view.findViewById(R.id.resultProductNameTextView);
+        TextView category = view.findViewById(R.id.resultProductCategoryTextView);
+        TextView dateScanned = view.findViewById(R.id.resultDateTextView);
+        TextView barcode = view.findViewById(R.id.resultBarcodeTextView);
+        TextView material = view.findViewById(R.id.resultProductMaterialTextView);
 
-        if(bundle.containsKey("name")) {
+        if (bundle.containsKey("name")) {
 
             productName.setText(bundle.getString("name"));
             category.setText(bundle.getString("category"));
@@ -59,57 +50,54 @@ public class ResultFragment extends Fragment {
             material.setText(bundle.getString("material"));
             dateScanned.setText(bundle.getString("dateScanned"));
 
-        }
-
-        else {
+        } else {
 
             // firebase get logic goes here
 
         }
 
-        callbackManager = CallbackManager.Factory.create();
-        dialog = new ShareDialog(getActivity());
-
+        CallbackManager callbackManager = CallbackManager.Factory.create();
+        ShareDialog dialog = new ShareDialog(getActivity());
         shareButton.setShareContent(getLinkContent());
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-                    @Override
-                    public void onSuccess(Sharer.Result result) {
-                        Toast.makeText(getActivity(),
-                                "Link Posted Successfully",
-                                Toast.LENGTH_SHORT).show();
-                    }
+        shareButton.setOnClickListener(v -> {
 
-                    @Override
-                    public void onCancel() {
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(getActivity(),
-                                "Something went wrong...",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                if (dialog.canShow(ShareLinkContent.class)) {
-                    dialog.show(getLinkContent());
-                }
+            if (dialog.canShow(ShareLinkContent.class)) {
+                dialog.show(getLinkContent());
             }
+
+            dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+
+                @Override
+                public void onSuccess(Sharer.Result result) {
+                    Toast.makeText(getActivity(),
+                            "Link posted successfully",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancel() {
+                    Toast.makeText(getActivity(),
+                            "Post action cancelled...",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+                    Toast.makeText(getActivity(),
+                            "Something went wrong...",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         return view;
     }
 
-    public ShareLinkContent getLinkContent(){
+    private ShareLinkContent getLinkContent() {
         return new ShareLinkContent.Builder()
                 .setQuote("Check out the app here!")
                 .setContentUrl(Uri.parse("https://github.com/04HuynhM"))
                 .build();
     }
-
-
 }

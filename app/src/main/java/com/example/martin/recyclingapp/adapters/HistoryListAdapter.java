@@ -1,6 +1,5 @@
 package com.example.martin.recyclingapp.adapters;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +14,7 @@ import com.example.martin.recyclingapp.MainActivity;
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.ResultFragment;
 import com.example.martin.recyclingapp.db.Item;
-import com.example.martin.recyclingapp.history.HistoryFragment;
-import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareButton;
-import com.facebook.share.widget.ShareDialog;
 
 import java.util.ArrayList;
 
@@ -29,28 +24,28 @@ import java.util.ArrayList;
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.HistoryViewHolder> {
 
-    private LayoutInflater inflator;
+    private LayoutInflater layoutInflater;
     private ArrayList<Item> items;
 
     public HistoryListAdapter(Context context, ArrayList<Item> items) {
-        inflator = LayoutInflater.from(context);
+        layoutInflater = LayoutInflater.from(context);
         this.items = items;
     }
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflator.inflate(R.layout.history_row, parent, false);
+        View view = layoutInflater.inflate(R.layout.history_row, parent, false);
         HistoryViewHolder holder = new HistoryViewHolder(view);
         MainActivity main = new MainActivity();
-        holder.itemView.setOnClickListener(view1 -> {
+        holder.itemView.setOnClickListener(v -> {
             Bundle itemBundle = new Bundle();
             itemBundle.putString("name",
                     items.get(holder.getAdapterPosition()).getProductName());
             itemBundle.putString("category",
                     items.get(holder.getAdapterPosition()).getCategory());
             itemBundle.putString("dateScanned",
-                    items.get(holder.getAdapterPosition()).getDateScanned().toString());
+                    Long.toString(items.get(holder.getAdapterPosition()).getDateScanned()));
             itemBundle.putString("materials",
                     items.get(holder.getAdapterPosition()).getProductMaterial());
             itemBundle.putString("barcode",
@@ -74,7 +69,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
         Item current = items.get(position);
         holder.productName.setText(current.getProductName());
-        holder.dateScanned.setText(current.getDateScanned().toString());
+        holder.dateScanned.setText(Long.toString(current.getDateScanned())); //Create resource for this with format %d1 etc.
         holder.productMaterial.setText(current.getProductMaterial());
 //        holder.productClass.setImageBitmap();
 
@@ -106,7 +101,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             productName = itemView.findViewById(R.id.historyProductName);
             productMaterial = itemView.findViewById(R.id.historyMaterialTextView);
             dateScanned = itemView.findViewById(R.id.historyScanDate);
-            productImage = itemView.findViewById(R.id.productHistoryImage);
+            //productImage = itemView.findViewById(R.id.productHistoryImage);
             productClass = itemView.findViewById(R.id.historyClassImage);
         }
     }
