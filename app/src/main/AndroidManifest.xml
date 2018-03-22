@@ -37,7 +37,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".sign.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,8 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CameraActivity" />
-        <activity android:name=".FirebaseTestActivity" />
-        <activity android:name=".sign.LoginActivity"></activity>
+        <activity android:name="MainActivity"/>
 
         <provider
             android:authorities="com.facebook.app.FacebookContentProvider{995991727206762}"
@@ -54,5 +53,4 @@
             android:exported="true"/>
 
     </application>
-
 </manifest>
