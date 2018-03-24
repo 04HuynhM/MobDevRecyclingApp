@@ -14,14 +14,13 @@ import com.google.firebase.database.ValueEventListener;
  * Created by charlie on 2018-03-18.
  */
 
-@Database(entities =  {User.class, Item.class}, version = 1)
+@Database(entities =  {Item.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "AppDatabase";
 
     private static AppDatabase INSTANCE;
 
-    public abstract UserDao userDao();
     public abstract ItemDao itemDao();
 
     public static AppDatabase getAppDatabase(Context context) {

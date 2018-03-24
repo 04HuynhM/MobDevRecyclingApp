@@ -6,17 +6,26 @@
     android:background="#fafafa"
     android:clickable="true"
     android:elevation="20dp">
-
+    <TextView
+        android:id="@+id/text_title_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Register"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <EditText
         android:id="@+id/edit_email_register"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="16dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/text_title_register"/>
     <EditText
         android:id="@+id/edit_password_register"
         android:layout_width="0dp"
@@ -42,29 +51,54 @@
         app:layout_constraintEnd_toEndOf="@id/edit_name_register"
         app:layout_constraintStart_toStartOf="@id/edit_name_register"
         app:layout_constraintTop_toBottomOf="@id/edit_name_register"/>
-    <EditText
-        android:id="@+id/edit_age_register"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/text_age_register"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Age"
-        app:layout_constraintEnd_toEndOf="@id/edit_surname_register"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Age:"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/edit_surname_register"
-        app:layout_constraintTop_toBottomOf="@id/edit_surname_register" />
-    <EditText
-        android:id="@+id/edit_gender_register"
-        android:layout_width="0dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_surname_register"/>
+    <TextView
+        android:id="@+id/text_content_age_register"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Gender"
-        app:layout_constraintEnd_toEndOf="@id/edit_age_register"
-        app:layout_constraintStart_toStartOf="@id/edit_age_register"
-        app:layout_constraintTop_toBottomOf="@id/edit_age_register"/>
+        android:layout_marginStart="32dp"
+        android:text="Select"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/text_age_register"
+        app:layout_constraintEnd_toEndOf="@id/edit_surname_register"
+        app:layout_constraintTop_toTopOf="@id/text_age_register"/>
+    <TextView
+        android:id="@+id/text_gender_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Gender:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/text_age_register"
+        app:layout_constraintTop_toBottomOf="@id/text_age_register"/>
+    <TextView
+        android:id="@+id/text_content_gender_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/text_gender_register"
+        app:layout_constraintEnd_toEndOf="@id/edit_surname_register"
+        app:layout_constraintTop_toTopOf="@id/text_gender_register"/>
     <Button
         android:id="@+id/button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:text="register"
-        app:layout_constraintEnd_toEndOf="@id/edit_gender_register"
-        app:layout_constraintTop_toBottomOf="@id/edit_gender_register"/>
-
+        app:layout_constraintEnd_toEndOf="@id/text_content_gender_register"
+        app:layout_constraintTop_toBottomOf="@id/text_content_gender_register"/>
 </android.support.constraint.ConstraintLayout>

@@ -54,6 +54,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     compile 'com.google.code.gson:gson:2.8.2'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
+    compile 'biz.kasual:materialnumberpicker:1.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
