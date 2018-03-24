@@ -50,7 +50,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CameraActivity" />
-        <activity android:name=".sign.LoginActivity"></activity>
         <activity android:name="MainActivity"/>
 
         <provider
