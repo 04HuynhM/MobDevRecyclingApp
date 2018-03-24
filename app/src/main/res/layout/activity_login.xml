@@ -6,16 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.martin.recyclingapp.sign.LoginActivity">
-
+    <TextView
+        android:id="@+id/text_title_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="Sign in"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <EditText
         android:id="@+id/edit_email_login"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="36dp"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/text_title_login"/>
     <EditText
         android:id="@+id/edit_password_login"
         android:layout_width="0dp"
@@ -34,7 +45,6 @@
         android:text="sign in"
         app:layout_constraintEnd_toEndOf="@id/edit_password_login"
         app:layout_constraintTop_toBottomOf="@id/edit_password_login"/>
-
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login_button"
         android:layout_width="wrap_content"
@@ -46,7 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_sign_in_login" />
-
     <TextView
         android:id="@+id/text_label_not_registered_login"
         android:layout_width="wrap_content"
@@ -58,7 +67,6 @@
         app:layout_constraintBottom_toTopOf="@id/text_button_register_login"
         app:layout_constraintEnd_toEndOf="@id/text_button_register_login"
         app:layout_constraintStart_toStartOf="@id/text_button_register_login"/>
-
     <TextView
         android:id="@+id/text_button_register_login"
         android:layout_width="wrap_content"
@@ -70,5 +78,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
 </android.support.constraint.ConstraintLayout>

@@ -14,8 +14,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ConstantsAndUtils {
 
-    public static final FirebaseDatabase FIREBASE_DATABASE = FirebaseDatabase.getInstance();
     public static final String FIREBASE_USERS = "https://recycling-app-hkr.firebaseio.com/Users";
+
+    public static final FirebaseDatabase FIREBASE_DATABASE = FirebaseDatabase.getInstance();
     public static final DatabaseReference FIREBASE_USERS_REFERENCE =
             ConstantsAndUtils.FIREBASE_DATABASE.getReferenceFromUrl(ConstantsAndUtils.FIREBASE_USERS);
 

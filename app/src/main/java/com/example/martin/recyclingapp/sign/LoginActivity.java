@@ -19,6 +19,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -55,25 +56,32 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setEnabled(true);
         signInButton.setOnClickListener(v -> {
             signInButton.setEnabled(false);
-            firebaseAuth.signInWithEmailAndPassword(emailEdit.getText().toString().trim(),
-                    passEdit.getText().toString().trim())
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
+            try {
+                firebaseAuth.signInWithEmailAndPassword(emailEdit.getText().toString().trim(),
+                        passEdit.getText().toString().trim())
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
 
-                            final String UID = firebaseAuth.getCurrentUser().getUid();
+                                final String UID = firebaseAuth.getCurrentUser().getUid();
 
-                            Intent intent = new Intent(
-                                    LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(
+                                        LoginActivity.this, MainActivity.class);
 
-                            AppDatabase.getAppDatabase(this).syncUserWithFirebase(UID);
+                                AppDatabase.getAppDatabase(this).syncUserWithFirebase(UID);
 
-                            startActivity(intent);
-                        }
-                    });
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                                signInButton.setEnabled(true);
+                            }
+                        });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                signInButton.setEnabled(true);
+            }
         });
-        registerText.setEnabled(true);
         registerText.setOnClickListener(v -> {
-                registerText.setEnabled(false);
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.activity_login, new RegisterFragment())
