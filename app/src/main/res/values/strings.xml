@@ -13,6 +13,7 @@
     <string name="materials">Materials</string>
     <string name="dismiss">Dismiss</string>
     <string name="places_add_title">Pick all bins available here</string>
+    <string name="places_filter_title">Filter by categories</string>
     <string name="places_modify_title">Modify what bins are available</string>
     <string name="facebook_app_id">995991727206762</string>
     <string name="maps_app_key">AIzaSyBqayXqbxZIeBIqzmwtlWbGvd4TrbD8Dps</string>

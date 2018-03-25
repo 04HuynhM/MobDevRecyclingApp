@@ -52,6 +52,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
             "Cooking oil",
             "Non-recyclables"
     };
+    public static boolean[] filter;
     private final double EARTH_RADIUS = 6378100.0;
 
     @Nullable
@@ -65,6 +66,16 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         FloatingActionButton fab = view.findViewById(R.id.add_marker);
         fab.setOnClickListener(v -> {
             onAddPressed();
+        });
+
+        filter = new boolean[categories.length];
+        for (int i=0; i<filter.length; i++){
+            filter[i] = true;
+        }
+
+        FloatingActionButton filter = view.findViewById(R.id.filter_marker);
+        filter.setOnClickListener(v -> {
+            onFilterPressed();
         });
         return view;
     }
@@ -112,6 +123,10 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         double newLat = Math.asin(Math.sin(lat) * Math.cos(d) + Math.cos(lat) * Math.sin(d) * Math.cos(r));
         double newLon = lon + Math.atan2(Math.sin(r) * Math.sin(d) * Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(newLat));
         return new LatLng(Math.toDegrees(newLat), Math.toDegrees(newLon));
+    }
+
+    private boolean isFiltered(PLACE_TYPE type){
+        return filter[catToIndex(typeToCat(type))];
     }
 
     private PLACE_TYPE catToType(CharSequence cat){
@@ -178,6 +193,25 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
 
     public void onAddPressed(){
         this.onCreateDialog().show();
+    }
+
+    public void onFilterPressed() {
+        this.onFilterDialog().show();
+    }
+
+    public Dialog onFilterDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setTitle(R.string.places_filter_title)
+            .setMultiChoiceItems(categories, filter, (dialogInterface, i, b) -> {
+                filter[i] = b;
+            })
+            .setPositiveButton(R.string.add_button, (dialogInterface, i) -> {
+                drawAllMarkers();
+            })
+            .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+                drawAllMarkers();
+            });
+        return builder.create();
     }
 
     public Dialog onCreateDialog() {
@@ -251,7 +285,9 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     public void drawAllMarkers() {
         clearAllMarkers();
         for (Place place : places){
-            this.drawMarker(place);
+            if (isFiltered(place.getEnumType())) {
+                this.drawMarker(place);
+            }
         }
     }
 
