@@ -6,21 +6,24 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by charlie on 2018-03-18.
  */
 
-@Database(entities =  {Item.class}, version = 1)
+@Database(entities =  {Item.class, Place.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "AppDatabase";
 
     private static AppDatabase INSTANCE;
 
+    public abstract PlaceDao placeDao();
     public abstract ItemDao itemDao();
 
     public static AppDatabase getAppDatabase(Context context) {
@@ -55,6 +58,10 @@ public abstract class AppDatabase extends RoomDatabase {
                         Log.e(TAG, databaseError.toString());
                     }
                 });
+    }
+
+    public void syncPlaceWithFirebase(String uid) {
+
     }
 
     public static void destroyInstance() {
