@@ -1,39 +1,40 @@
 package com.example.martin.recyclingapp.db;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import java.util.UUID;
 
 import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by kamai on 24-Mar-18.
  */
-
+@Entity
 public class Place {
 
     @PrimaryKey
     @NonNull
     private String uid;
-    @ColumnInfo(name = "langitude")
-    private double langitude;
+    @ColumnInfo(name = "latitude")
+    private double latitude;
     @ColumnInfo(name = "longitude")
     private double longitude;
     @ColumnInfo(name = "type")
     private int type;
 
-    public Place(@NonNull String uid,
-                double langitude,
-                double longitude,
-                int type) {
-        this.uid = uid;
-        this.langitude = langitude;
+    public Place(double latitude,
+                 double longitude,
+                 PLACE_TYPE type) {
+        this.uid = String.valueOf(UUID.randomUUID());
+        this.latitude = latitude;
         this.longitude = longitude;
-        this.type = type;
+        this.type = type.ordinal();
     }
 
     public Place() {
-
+        this.uid = String.valueOf(UUID.randomUUID());
     }
 
     @NonNull
@@ -45,12 +46,12 @@ public class Place {
         this.uid = uid;
     }
 
-    public double getLangitude() {
-        return langitude;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLangitude(double langitude) {
-        this.langitude = langitude;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
@@ -61,15 +62,19 @@ public class Place {
         this.longitude = longitude;
     }
 
-    public double getType() {
-        return type;
+    public int getType(){
+        return this.type;
     }
 
-    public void setLongitude(int type) {
+    public PLACE_TYPE getEnumType() {
+        return PLACE_TYPE.values()[this.getType()];
+    }
+
+    public void setType(int type) {
         this.type = type;
     }
 
     public LatLng getLangLng(){
-        return new LatLng(this.langitude, this.longitude);
+        return new LatLng(this.getLatitude(), this.getLongitude());
     }
 }

@@ -5,12 +5,15 @@
     <string name="tab_overall">Overall</string>
     <string name="tab_nearby">Nearby</string>
     <string name="tab_history">History</string>
-
+    <string name="cancel">Cancel</string>
+    <string name="add_button">Add</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recycling_class">Recycling Class</string>
     <string name="materials">Materials</string>
     <string name="dismiss">Dismiss</string>
+    <string name="places_add_title">Pick all bins available here</string>
+    <string name="places_modify_title">Modify what bins are available</string>
     <string name="facebook_app_id">995991727206762</string>
     <string name="maps_app_key">AIzaSyBqayXqbxZIeBIqzmwtlWbGvd4TrbD8Dps</string>
     <string name="fb_login_protocol_scheme">fb995991727206762</string>
