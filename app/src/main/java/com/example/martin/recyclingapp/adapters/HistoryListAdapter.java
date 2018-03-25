@@ -17,6 +17,7 @@ import com.example.martin.recyclingapp.db.Item;
 import com.facebook.share.model.ShareLinkContent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by martinhuynh on 17/03/2018.
@@ -25,9 +26,9 @@ import java.util.ArrayList;
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.HistoryViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<Item> items;
+    private List<Item> items;
 
-    public HistoryListAdapter(Context context, ArrayList<Item> items) {
+    public HistoryListAdapter(Context context, List<Item> items) {
         layoutInflater = LayoutInflater.from(context);
         this.items = items;
     }
@@ -77,7 +78,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return items.size();
     }
 
 
