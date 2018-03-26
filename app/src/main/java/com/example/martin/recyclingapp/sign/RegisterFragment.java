@@ -50,7 +50,8 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(ConstantsAndUtils.FIREBASE_USERS);
+        firebaseReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(ConstantsAndUtils.FIREBASE_USERS);
 
         email = view.findViewById(R.id.edit_email_register);
         password = view.findViewById(R.id.edit_password_register);
@@ -190,7 +191,7 @@ public class RegisterFragment extends Fragment {
         switch (s) {
             case "Male":
                 return User.GENDER_MALE;
-            case "Female:":
+            case "Female":
                 return User.GENDER_FEMALE;
             case "Other":
                 return User.GENDER_OTHER;

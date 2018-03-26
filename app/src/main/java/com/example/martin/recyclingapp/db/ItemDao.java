@@ -23,4 +23,7 @@ public interface ItemDao {
     @Query("SELECT * FROM item")
     List<Item> getItems();
 
+    @Query("DELETE FROM item")
+    void clearItems();
+
 }

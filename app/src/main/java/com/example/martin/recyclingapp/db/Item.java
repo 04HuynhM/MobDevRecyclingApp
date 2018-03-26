@@ -28,7 +28,7 @@ public class Item {
     @ColumnInfo(name = "date_scanned")
     private String dateScanned;
     @ColumnInfo(name = "category")
-    private String category;
+    private String productCategory;
 //    @ColumnInfo
 //    String imageUrl;
 
@@ -43,7 +43,7 @@ public class Item {
         this.productName = productName;
         this.productMaterial = productMaterial;
         this.dateScanned = dateScanned;
-        this.category = category;
+        this.productCategory = category;
     }
 
     public Item() {
@@ -106,15 +106,15 @@ public class Item {
         this.dateScanned = dateScanned;
     }
 
-    public String getCategory() {
-        return category;
+    public String getProductCategory() {
+        return productCategory;
     }
 
 //    public String getImageUrl() {
 //        return imageUrl;
 //    }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setProductCategory(String category) {
+        this.productCategory = category;
     }
 }

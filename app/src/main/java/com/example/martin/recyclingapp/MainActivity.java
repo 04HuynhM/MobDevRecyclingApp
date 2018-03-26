@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.martin.recyclingapp.adapters.MainActivityPagerAdapter;
 
+import com.example.martin.recyclingapp.db.AppDatabase;
 import com.example.martin.recyclingapp.db.ConstantsAndUtils;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -144,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
 //            });
             FirebaseAuth.getInstance().signOut();
             LoginManager.getInstance().logOut();
+
+            new Thread(() -> {
+                AppDatabase.getAppDatabase(this).itemDao().clearItems();
+            });
+
             //dialog.show();
             ConstantsAndUtils.triggerRebirth(this);
         } else {

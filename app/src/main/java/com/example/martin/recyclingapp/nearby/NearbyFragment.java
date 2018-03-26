@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.db.ConstantsAndUtils;
-import com.example.martin.recyclingapp.db.PLACE_TYPE;
 import com.example.martin.recyclingapp.db.Place;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -184,36 +183,36 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         return new LatLng(Math.toDegrees(newLat), Math.toDegrees(newLon));
     }
 
-    private boolean isFiltered(PLACE_TYPE type){
+    private boolean isFiltered(Place.PLACE_TYPE type){
         return filter[catToIndex(typeToCat(type))];
     }
 
-    private PLACE_TYPE catToType(CharSequence cat){
+    private Place.PLACE_TYPE catToType(CharSequence cat){
         if (cat.equals("Paper")){
-            return PLACE_TYPE.PAPER;
+            return Place.PLACE_TYPE.PAPER;
         }
         else if (cat.equals("Plastic")){
-            return PLACE_TYPE.PLASTIC;
+            return Place.PLACE_TYPE.PLASTIC;
         }
         else if (cat.equals("Burnable")){
-            return PLACE_TYPE.BURNABLE;
+            return Place.PLACE_TYPE.BURNABLE;
         }
         else if (cat.equals("Batteries")){
-            return PLACE_TYPE.BATTERIES;
+            return Place.PLACE_TYPE.BATTERIES;
         }
         else if (cat.equals("Lightbulbs")){
-            return PLACE_TYPE.LIGHTBULBS;
+            return Place.PLACE_TYPE.LIGHTBULBS;
         }
         else if (cat.equals("Cans/Metal")){
-            return PLACE_TYPE.CAN;
+            return Place.PLACE_TYPE.CAN;
         }
         else if (cat.equals("Cooking oil")){
-            return PLACE_TYPE.OIL;
+            return Place.PLACE_TYPE.OIL;
         }
-        return PLACE_TYPE.OTHER;
+        return Place.PLACE_TYPE.OTHER;
     }
 
-    private CharSequence typeToCat(PLACE_TYPE type){
+    private CharSequence typeToCat(Place.PLACE_TYPE type){
         switch(type){
             case PAPER:
                 return "Paper";
@@ -302,7 +301,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
             })
             .setPositiveButton(R.string.add_button, (dialogInterface, i) -> {
                 final double total = selected.size();
-                PLACE_TYPE type;
+                Place.PLACE_TYPE type;
                 if (isModifying) {
                     for (Place place : nearPlaces) {
                         placesReference.child(place.getUid()).removeValue();
@@ -397,7 +396,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
                 .draggable(false));
     }
 
-    public Place addMarker(LatLng position, PLACE_TYPE type){
+    public Place addMarker(LatLng position, Place.PLACE_TYPE type){
         Place place = new Place(position.latitude, position.longitude, type);
         placesReference.push().setValue(place);
         //places.add(place);

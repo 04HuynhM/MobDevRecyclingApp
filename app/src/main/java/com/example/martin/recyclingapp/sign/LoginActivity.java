@@ -62,12 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
 
-                                final String UID = firebaseAuth.getCurrentUser().getUid();
-
                                 Intent intent = new Intent(
                                         LoginActivity.this, MainActivity.class);
 
-                                AppDatabase.getAppDatabase(this).syncUserWithFirebase(UID);
+                                AppDatabase.getAppDatabase(this).syncUserWithFirebase();
 
                                 startActivity(intent);
                             } else {

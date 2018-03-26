@@ -1,7 +1,6 @@
 package com.example.martin.recyclingapp.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,15 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.martin.recyclingapp.MainActivity;
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.ResultFragment;
 import com.example.martin.recyclingapp.db.Item;
-import com.facebook.share.model.ShareLinkContent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,8 +41,8 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             Bundle itemBundle = new Bundle();
             itemBundle.putString("name",
                     items.get(holder.getAdapterPosition()).getProductName());
-//            itemBundle.putString("category",
-//                    items.get(holder.getAdapterPosition()).getCategory());
+            itemBundle.putString("category",
+                    items.get(holder.getAdapterPosition()).getProductCategory());
             itemBundle.putString("dateScanned",
                     items.get(holder.getAdapterPosition()).getDateScanned());
             itemBundle.putString("materials",
@@ -58,7 +54,9 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
             ResultFragment result = new ResultFragment();
             result.setArguments(itemBundle);
-            ((MainActivity) context).getFragmentManager().beginTransaction()
+            ((MainActivity) context).getFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
                     .add(android.R.id.content, result).commit();
 
         });
@@ -74,8 +72,30 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         holder.productName.setText(current.getProductName());
         holder.dateScanned.setText(current.getDateScanned());
         holder.productMaterial.setText(current.getProductMaterial());
-//        holder.productClass.setImageBitmap();
 
+        switch (current.getProductCategory()) {
+                case "Paper":
+                    holder.productCategory.setImageResource(R.drawable.ic_paper);
+                    break;
+                case "Plastic":
+                    holder.productCategory.setImageResource(R.drawable.ic_bottle);
+                    break;
+                case "Burnable":
+                    holder.productCategory.setImageResource(R.drawable.ic_burnables);
+                    break;
+                case "Lightbulb":
+                    holder.productCategory.setImageResource(R.drawable.ic_bulb);
+                    break;
+                case "Battery":
+                    holder.productCategory.setImageResource(R.drawable.ic_battery);
+                    break;
+                case "Can":
+                    holder.productCategory.setImageResource(R.drawable.ic_can);
+                    break;
+                case "Oil":
+                    holder.productCategory.setImageResource(R.drawable.ic_oil);
+                    break;
+        }
     }
 
     @Override
@@ -89,7 +109,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         TextView productMaterial;
         TextView dateScanned;
         ImageView productImage;
-        ImageView productClass;
+        ImageView productCategory;
 
         public HistoryViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +117,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             productMaterial = itemView.findViewById(R.id.historyMaterialTextView);
             dateScanned = itemView.findViewById(R.id.historyScanDate);
             //productImage = itemView.findViewById(R.id.productHistoryImage);
-            productClass = itemView.findViewById(R.id.historyClassImage);
+            productCategory = itemView.findViewById(R.id.historyCategoryImage);
         }
     }
 

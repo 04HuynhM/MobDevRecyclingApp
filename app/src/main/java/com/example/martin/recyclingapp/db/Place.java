@@ -9,6 +9,17 @@ import com.google.firebase.database.Exclude;
 
 public class Place {
 
+    public enum PLACE_TYPE {
+        PAPER,
+        PLASTIC,
+        BURNABLE,
+        BATTERIES,
+        LIGHTBULBS,
+        CAN,
+        OIL,
+        OTHER
+    }
+
     @Exclude
     private String uid = "";
     private double latitude;
@@ -66,4 +77,8 @@ public class Place {
     public LatLng getLangLng(){
         return new LatLng(this.latitude, this.longitude);
     }
+
+    /**
+     * Created by kamai on 25-Mar-18.
+     */
 }

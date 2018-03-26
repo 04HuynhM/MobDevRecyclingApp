@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.example.martin.recyclingapp.R;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by charlie on 2018-02-02.
  */
