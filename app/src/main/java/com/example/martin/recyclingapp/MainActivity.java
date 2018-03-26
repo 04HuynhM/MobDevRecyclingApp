@@ -102,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Barcode barcode = data.getParcelableExtra("barcode");
                     Bundle bundle = new Bundle();
-                    bundle.putString("barcode", barcode.toString());
-
+                    bundle.putString("barcode", barcode.displayValue);
                     FragmentManager fragmentManager = getFragmentManager();
                     ResultFragment resultFragment = new ResultFragment();
                     resultFragment.setArguments(bundle);

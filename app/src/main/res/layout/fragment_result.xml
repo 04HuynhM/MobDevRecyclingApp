@@ -78,17 +78,17 @@
 
         <ImageView
             android:id="@+id/resultProductCategory"
-            android:layout_width="80dp"
+            android:layout_width="79dp"
             android:layout_height="80dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:padding="1dp"
-            android:scaleType="centerInside"
-            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_battery"
             app:layout_constraintBottom_toBottomOf="@+id/resultProductCategoryTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/resultProductCategoryTextView"
-            app:srcCompat="@drawable/flame" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

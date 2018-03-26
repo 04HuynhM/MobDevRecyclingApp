@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by charlie on 2018-03-18.
  */
@@ -34,6 +37,8 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
 
     public abstract ItemDao itemDao();
+
+    private Item item;
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
@@ -68,6 +73,49 @@ public abstract class AppDatabase extends RoomDatabase {
                         Log.e(TAG, databaseError.toString());
                     }
                 });
+    }
+
+    public Item getItemFromFirebase(String uid) {
+        ConstantsAndUtils.FIREBASE_ITEMS_REFERENCE.child(uid)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getChildren() != null) {
+                            item = dataSnapshot.getValue(Item.class);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, databaseError.toString());
+                    }
+                });
+        return item;
+    }
+
+    public void addItemToFirebaseUser(String uid, Item item) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("barcodeNumber", item.getBarcodeNumber());
+        map.put("productName", item.getProductName());
+        map.put("productMaterial", item.getProductMaterial());
+        map.put("productCategory", item.getCategory());
+        map.put("dateScanned", item.getDateScanned());
+        map.put("uid", item.getBarcodeNumber());
+//        map.put("imageUrl", item.getImageUrl());
+
+        ConstantsAndUtils.FIREBASE_USERS_REFERENCE
+                .child(uid)
+                .child("items")
+                .child(item.getBarcodeNumber())
+                .setValue(map);
+
+        syncUserWithFirebase(uid);
+
+    }
+
+    public void syncPlaceWithFirebase(String uid) {
+
     }
 
     public static void destroyInstance() {

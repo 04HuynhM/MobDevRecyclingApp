@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.martin.recyclingapp.MainActivity;
 import com.example.martin.recyclingapp.R;
@@ -27,10 +28,12 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
     private LayoutInflater layoutInflater;
     private List<Item> items;
+    private Context context;
 
     public HistoryListAdapter(Context context, List<Item> items) {
         layoutInflater = LayoutInflater.from(context);
         this.items = items;
+        this.context = context;
     }
 
     @Override
@@ -38,15 +41,14 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
         View view = layoutInflater.inflate(R.layout.history_row, parent, false);
         HistoryViewHolder holder = new HistoryViewHolder(view);
-        MainActivity main = new MainActivity();
         holder.itemView.setOnClickListener(v -> {
             Bundle itemBundle = new Bundle();
             itemBundle.putString("name",
                     items.get(holder.getAdapterPosition()).getProductName());
-            itemBundle.putString("category",
-                    items.get(holder.getAdapterPosition()).getCategory());
+//            itemBundle.putString("category",
+//                    items.get(holder.getAdapterPosition()).getCategory());
             itemBundle.putString("dateScanned",
-                    Long.toString(items.get(holder.getAdapterPosition()).getDateScanned()));
+                    items.get(holder.getAdapterPosition()).getDateScanned());
             itemBundle.putString("materials",
                     items.get(holder.getAdapterPosition()).getProductMaterial());
             itemBundle.putString("barcode",
@@ -56,7 +58,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
             ResultFragment result = new ResultFragment();
             result.setArguments(itemBundle);
-            main.getFragmentManager().beginTransaction()
+            ((MainActivity) context).getFragmentManager().beginTransaction()
                     .add(android.R.id.content, result).commit();
 
         });
@@ -70,7 +72,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
         Item current = items.get(position);
         holder.productName.setText(current.getProductName());
-        holder.dateScanned.setText(Long.toString(current.getDateScanned())); //Create resource for this with format %d1 etc.
+        holder.dateScanned.setText(current.getDateScanned());
         holder.productMaterial.setText(current.getProductMaterial());
 //        holder.productClass.setImageBitmap();
 
@@ -79,14 +81,6 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
     @Override
     public int getItemCount() {
         return items.size();
-    }
-
-
-    public ShareLinkContent getShareLinkContent() {
-        return new ShareLinkContent.Builder()
-                .setQuote("Check out the app here!")
-                .setContentUrl(Uri.parse("https://github.com/04HuynhM"))
-                .build();
     }
 
     class HistoryViewHolder extends RecyclerView.ViewHolder{
