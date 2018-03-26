@@ -38,8 +38,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ItemDao itemDao();
 
-    private Item item;
-
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
@@ -51,8 +49,8 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    public void syncUserWithFirebase(String uid) {
-        ConstantsAndUtils.FIREBASE_USERS_REFERENCE.child(uid).child("items")
+    public void syncUserWithFirebase() {
+        ConstantsAndUtils.FIREBASE_USERS_REFERENCE.child(ConstantsAndUtils.USER_UID).child("items")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,43 +73,31 @@ public abstract class AppDatabase extends RoomDatabase {
                 });
     }
 
-    public Item getItemFromFirebase(String uid) {
-        ConstantsAndUtils.FIREBASE_ITEMS_REFERENCE.child(uid)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getChildren() != null) {
-                            item = dataSnapshot.getValue(Item.class);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e(TAG, databaseError.toString());
-                    }
-                });
-        return item;
-    }
-
-    public void addItemToFirebaseUser(String uid, Item item) {
+    public void addItemToFirebaseUser(Item item) {
 
         Map<String, String> map = new HashMap<>();
         map.put("barcodeNumber", item.getBarcodeNumber());
         map.put("productName", item.getProductName());
         map.put("productMaterial", item.getProductMaterial());
-        map.put("productCategory", item.getCategory());
+        map.put("productCategory", item.getProductCategory());
         map.put("dateScanned", item.getDateScanned());
         map.put("uid", item.getBarcodeNumber());
 //        map.put("imageUrl", item.getImageUrl());
 
         ConstantsAndUtils.FIREBASE_USERS_REFERENCE
-                .child(uid)
+                .child(ConstantsAndUtils.USER_UID)
                 .child("items")
                 .child(item.getBarcodeNumber())
                 .setValue(map);
 
-        syncUserWithFirebase(uid);
+        Map<String, String> mapForFirebase;
+        mapForFirebase = map;
+        mapForFirebase.remove("dateScanned");
+        ConstantsAndUtils.FIREBASE_ITEMS_REFERENCE
+                .child(item.getBarcodeNumber())
+                .setValue(mapForFirebase);
 
+        syncUserWithFirebase();
     }
 
     public void syncPlaceWithFirebase(String uid) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -16,6 +17,8 @@ public class ConstantsAndUtils {
 
     public static final String FIREBASE_USERS = "https://recycling-app-hkr.firebaseio.com/Users";
     public static final String FIREBASE_ITEMS = "https://recycling-app-hkr.firebaseio.com/Items";
+
+    public static final String USER_UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public static final FirebaseDatabase FIREBASE_DATABASE = FirebaseDatabase.getInstance();
     public static final String FIREBASE_PLACES = "https://recycling-app-hkr.firebaseio.com/Places";
@@ -34,5 +37,4 @@ public class ConstantsAndUtils {
         context.startActivity(mainIntent);
         Runtime.getRuntime().exit(0);
     }
-
 }

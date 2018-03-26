@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.adapters.HistoryListAdapter;
 import com.example.martin.recyclingapp.db.AppDatabase;
+import com.example.martin.recyclingapp.db.ConstantsAndUtils;
 import com.example.martin.recyclingapp.db.Item;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,10 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        AppDatabase.getAppDatabase(getActivity()).syncUserWithFirebase();
+
         items = new ArrayList<>();
 
         new Thread(() -> {

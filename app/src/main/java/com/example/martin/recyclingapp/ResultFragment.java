@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.martin.recyclingapp.db.AppDatabase;
+import com.example.martin.recyclingapp.db.ConstantsAndUtils;
 import com.example.martin.recyclingapp.db.Item;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -23,6 +25,9 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +55,7 @@ public class ResultFragment extends Fragment {
         TextView dateScanned = view.findViewById(R.id.resultDateTextView);
         TextView barcode = view.findViewById(R.id.resultBarcodeTextView);
         TextView material = view.findViewById(R.id.resultProductMaterialTextView);
+        ImageView categoryImage = view.findViewById(R.id.resultProductCategory);
         ImageView productImage = view.findViewById(R.id.resultProductImageView);
 
         Date date = new Date();
@@ -58,9 +64,9 @@ public class ResultFragment extends Fragment {
         String currentDate = sdf.format(date);
 
         if (bundle.containsKey("name")) {
-//            String categoryString = bundle.getString("category");
+            String categoryString = bundle.getString("category");
             productName.setText(bundle.getString("name"));
-//            category.setText(categoryString);
+            category.setText(categoryString);
             barcode.setText(bundle.getString("barcode"));
             material.setText(bundle.getString("materials"));
             dateScanned.setText(bundle.getString("dateScanned"));
@@ -70,124 +76,92 @@ public class ResultFragment extends Fragment {
             System.out.println(productName.getText().toString());
             System.out.println(dateScanned.getText().toString());
 
-//            switch (categoryString) {
-//                case "paper":
-//                    productImage.setImageResource(R.drawable.ic_paper);
-//                    break;
-//                case "plastic":
-//                    productImage.setImageResource(R.drawable.ic_bottle);
-//                    break;
-//                case "burnable":
-//                    productImage.setImageResource(R.drawable.ic_burnables);
-//                    break;
-//                case "lightbulb":
-//                    productImage.setImageResource(R.drawable.ic_bulb);
-//                    break;
-//                case "battery":
-//                    productImage.setImageResource(R.drawable.ic_battery);
-//                    break;
-//                case "can":
-//                    productImage.setImageResource(R.drawable.ic_can);
-//                    break;
-//                case "oil":
-//                    productImage.setImageResource(R.drawable.ic_oil);
-//                    break;
-//            }
+            switch (categoryString) {
+                case "Paper":
+                    categoryImage.setImageResource(R.drawable.ic_paper);
+                    break;
+                case "Plastic":
+                    categoryImage.setImageResource(R.drawable.ic_bottle);
+                    break;
+                case "Burnable":
+                    categoryImage.setImageResource(R.drawable.ic_burnables);
+                    break;
+                case "Lightbulb":
+                    categoryImage.setImageResource(R.drawable.ic_bulb);
+                    break;
+                case "Battery":
+                    categoryImage.setImageResource(R.drawable.ic_battery);
+                    break;
+                case "Can":
+                    categoryImage.setImageResource(R.drawable.ic_can);
+                    break;
+                case "Oil":
+                    categoryImage.setImageResource(R.drawable.ic_oil);
+                    break;
+            }
 
         } else {
 
-            Item item = checkAppDatabase(bundle);
+            ConstantsAndUtils.FIREBASE_ITEMS_REFERENCE.child(scannedBarcode)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getChildren() != null) {
+                                Item item = dataSnapshot.getValue(Item.class);
+                                if (item != null) {
+                                    Toast.makeText(getActivity(), "firebase item not null", Toast.LENGTH_SHORT).show();
+                                    productName.setText(item.getProductName());
+                                    category.setText(item.getProductCategory());
+                                    dateScanned.setText(currentDate);
+                                    barcode.setText(item.getBarcodeNumber());
+                                    material.setText(item.getProductMaterial());
+                                } else {
+                                    showDialog(scannedBarcode, currentDate);
+                                }
+                            }
+                        }
 
-            if (item != null) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                productName.setText(item.getProductName());
-                category.setText(item.getCategory());
-                dateScanned.setText(currentDate);
-                barcode.setText(item.getBarcodeNumber());
-                material.setText(item.getProductMaterial());
-
-//                new DownloadImageAsyncTask(productImage).execute(item.getImageUrl());
-
-            } else {
-
-                Item firebaseItem = AppDatabase.getAppDatabase(getActivity())
-                        .getItemFromFirebase(barcode.getText()
-                                .toString());
-
-                if (firebaseItem != null) {
-                    Toast.makeText(getActivity(), "firebase item not null", Toast.LENGTH_SHORT).show();
-                    productName.setText(firebaseItem.getProductName());
-                    category.setText(firebaseItem.getCategory());
-                    dateScanned.setText(currentDate);
-                    barcode.setText(firebaseItem.getBarcodeNumber());
-                    material.setText(firebaseItem.getProductMaterial());
-
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    AlertDialog dialog = builder.setTitle("Not in Database")
-                            .setMessage("This item is not in our database. " +
-                                    "Would you like to add it?")
-                            .setPositiveButton("Yes", (dialogInterface, i) -> {
-
-                                NewItemFragment newItem = new NewItemFragment();
-                                Bundle barcodeBundle = new Bundle();
-                                barcodeBundle.putString("barcode", scannedBarcode);
-                                barcodeBundle.putString("date", currentDate);
-                                newItem.setArguments(barcodeBundle);
-
-                                getActivity().getFragmentManager()
-                                        .beginTransaction()
-                                        .add(android.R.id.content, newItem)
-                                        .commit();
-                            })
-                            .setNegativeButton("No", (dialogInterface, i) ->
-                                    dialogInterface.dismiss()).create();
-
-                    dialog.setOnShowListener(dialogInterface -> {
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-                                .setTextColor(Color.BLACK);
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                                .setTextColor(Color.BLACK);
+                        }
                     });
-                    dialog.show();
-                }
+        }
+
+        CallbackManager callbackManager = CallbackManager.Factory.create();
+        ShareDialog dialog = new ShareDialog(getActivity());
+        shareButton.setShareContent(getLinkContent());
+
+        shareButton.setOnClickListener(v -> {
+
+            if (dialog.canShow(ShareLinkContent.class)) {
+                dialog.show(getLinkContent());
             }
 
-            CallbackManager callbackManager = CallbackManager.Factory.create();
-            ShareDialog dialog = new ShareDialog(getActivity());
-            shareButton.setShareContent(getLinkContent());
+            dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
 
-            shareButton.setOnClickListener(v -> {
-
-                if (dialog.canShow(ShareLinkContent.class)) {
-                    dialog.show(getLinkContent());
+                @Override
+                public void onSuccess(Sharer.Result result) {
+                    Toast.makeText(getActivity(),
+                            "Link posted successfully",
+                            Toast.LENGTH_SHORT).show();
                 }
 
-                dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                @Override
+                public void onCancel() {
+                    Toast.makeText(getActivity(),
+                            "Post action cancelled...",
+                            Toast.LENGTH_SHORT).show();
+                }
 
-                    @Override
-                    public void onSuccess(Sharer.Result result) {
-                        Toast.makeText(getActivity(),
-                                "Link posted successfully",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getActivity(),
-                                "Post action cancelled...",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(getActivity(),
-                                "Something went wrong...",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                @Override
+                public void onError(FacebookException error) {
+                    Toast.makeText(getActivity(),
+                            "Something went wrong...",
+                            Toast.LENGTH_SHORT).show();
+                }
             });
-        }
+        });
         return view;
     }
 
@@ -198,16 +172,38 @@ public class ResultFragment extends Fragment {
                 .build();
     }
 
-    private Item checkAppDatabase(Bundle bundle) {
+    private void showDialog(String scannedBarcode, String currentDate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog dialog = builder.setTitle("Not in Database")
+                .setMessage("This item is not in our database. " +
+                        "Would you like to add it?")
+                .setPositiveButton("Yes", (dialogInterface, i) -> {
 
-        final Item[] item = new Item[1];
-        new Thread(()-> {
-             item[0] = AppDatabase.getAppDatabase(getActivity())
-                .itemDao()
-                .findByUid(bundle
-                        .getString("barcode"));
+                    NewItemFragment newItem = new NewItemFragment();
+                    Bundle barcodeBundle = new Bundle();
+                    barcodeBundle.putString("barcode", scannedBarcode);
+                    barcodeBundle.putString("date", currentDate);
+                    newItem.setArguments(barcodeBundle);
 
-        }).start();
-        return item[0];
+                    getActivity().getFragmentManager()
+                            .beginTransaction()
+                            .remove(this)
+                            .commit();
+
+                    getActivity().getFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, newItem)
+                            .commit();
+                })
+                .setNegativeButton("No", (dialogInterface, i) ->
+                        dialogInterface.dismiss()).create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+                    .setTextColor(Color.BLACK);
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                    .setTextColor(Color.BLACK);
+        });
+        dialog.show();
     }
 }

@@ -2,6 +2,7 @@ package com.example.martin.recyclingapp;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -89,8 +90,7 @@ public class NewItemFragment extends Fragment {
                                     categoryBuilder.toString());
 
                             AppDatabase.getAppDatabase(getActivity())
-                                    .addItemToFirebaseUser(FirebaseAuth.getInstance().getCurrentUser().getUid()
-                                            , item);
+                                    .addItemToFirebaseUser(item);
 
                             ResultFragment fragment = new ResultFragment();
                             Bundle resultBundle = new Bundle();
@@ -98,7 +98,7 @@ public class NewItemFragment extends Fragment {
                             resultBundle.putString("name",
                                     item.getProductName());
                             resultBundle.putString("category",
-                                    item.getCategory());
+                                    item.getProductCategory());
                             resultBundle.putString("dateScanned",
                                     item.getDateScanned());
                             resultBundle.putString("materials",
@@ -107,9 +107,18 @@ public class NewItemFragment extends Fragment {
                                     item.getBarcodeNumber());
 
                             fragment.setArguments(resultBundle);
-                            getActivity().getFragmentManager()
+
+                            getActivity()
+                                    .getFragmentManager()
+                                    .beginTransaction()
+                                    .remove(this)
+                                    .commit();
+
+                            getActivity()
+                                    .getFragmentManager()
                                     .beginTransaction()
                                     .replace(android.R.id.content, fragment)
+                                    .addToBackStack("resultFragment")
                                     .commit();
 
                         }).setNegativeButton("No", (dialogInterface, i) ->
