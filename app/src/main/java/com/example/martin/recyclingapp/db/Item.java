@@ -26,15 +26,17 @@ public class Item {
     @ColumnInfo(name = "product_material")
     private String productMaterial;
     @ColumnInfo(name = "date_scanned")
-    private long dateScanned;
+    private String dateScanned;
     @ColumnInfo(name = "category")
     private String category;
+//    @ColumnInfo
+//    String imageUrl;
 
     public Item(@NonNull String uid,
                 String barcodeNumber,
                 String productName,
                 String productMaterial,
-                long dateScanned,
+                String dateScanned,
                 String category) {
         this.uid = uid;
         this.barcodeNumber = barcodeNumber;
@@ -96,18 +98,21 @@ public class Item {
         this.productMaterial = productMaterial;
     }
 
-    public long getDateScanned() {
+    public String getDateScanned() {
         return dateScanned;
     }
 
-    public void setDateScanned(long dateScanned) {
+    public void setDateScanned(String dateScanned) {
         this.dateScanned = dateScanned;
     }
 
     public String getCategory() {
-
         return category;
     }
+
+//    public String getImageUrl() {
+//        return imageUrl;
+//    }
 
     public void setCategory(String category) {
         this.category = category;

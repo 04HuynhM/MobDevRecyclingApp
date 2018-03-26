@@ -1,0 +1,162 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.example.martin.recyclingapp.NewItemFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/text_title_register2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Add New Item"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/new_item_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
+        android:text="Barcode"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_title_register2" />
+
+    <EditText
+        android:id="@+id/new_item_name"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Product Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_item_barcode" />
+
+    <EditText
+        android:id="@+id/new_item_material"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Material"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_item_name" />
+
+    <RadioGroup
+        android:id="@+id/new_item_radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/new_item_material"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/new_item_material"
+        app:layout_constraintTop_toBottomOf="@+id/new_item_material">
+
+        <RadioButton
+            android:id="@+id/new_item_radio_paper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Paper"
+            app:layout_constraintStart_toStartOf="@+id/new_item_material"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_material" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_plastic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Plastic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_paper" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_burnable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Burnable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_plastic" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_lightbulb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Lightbulb"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_battery" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Battery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_burnable" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_can"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Can"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_lightbulb" />
+
+        <RadioButton
+            android:id="@+id/new_item_radio_oil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Oil"
+            app:layout_constraintStart_toStartOf="@+id/new_item_radio_paper"
+            app:layout_constraintTop_toBottomOf="@+id/new_item_radio_can" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/add_item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Add Item"
+        app:layout_constraintEnd_toEndOf="@+id/new_item_material"
+        app:layout_constraintTop_toBottomOf="@+id/new_item_radiogroup" />
+
+</android.support.constraint.ConstraintLayout>

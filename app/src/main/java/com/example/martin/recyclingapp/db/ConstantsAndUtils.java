@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ConstantsAndUtils {
 
     public static final String FIREBASE_USERS = "https://recycling-app-hkr.firebaseio.com/Users";
+    public static final String FIREBASE_ITEMS = "https://recycling-app-hkr.firebaseio.com/Items";
 
     public static final FirebaseDatabase FIREBASE_DATABASE = FirebaseDatabase.getInstance();
     public static final String FIREBASE_PLACES = "https://recycling-app-hkr.firebaseio.com/Places";
@@ -22,6 +23,8 @@ public class ConstantsAndUtils {
             ConstantsAndUtils.FIREBASE_DATABASE.getReferenceFromUrl(ConstantsAndUtils.FIREBASE_USERS);
     public static final DatabaseReference FIREBASE_PLACES_REFERENCE =
             ConstantsAndUtils.FIREBASE_DATABASE.getReferenceFromUrl(ConstantsAndUtils.FIREBASE_PLACES);
+    public static final DatabaseReference FIREBASE_ITEMS_REFERENCE =
+            ConstantsAndUtils.FIREBASE_DATABASE.getReferenceFromUrl(ConstantsAndUtils.FIREBASE_ITEMS);
 
     public static void triggerRebirth(Context context) {
         PackageManager packageManager = context.getPackageManager();
