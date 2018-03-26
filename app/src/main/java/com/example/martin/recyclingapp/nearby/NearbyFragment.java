@@ -40,7 +40,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -282,7 +281,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
         ArrayList<Place> nearPlaces = placesInRadius(nearRadiusInMeters);
         for (Place place : nearPlaces){
-            int index = catToIndex(typeToCat(place.getEnumType()));
+            int index = catToIndex(typeToCat(place.getType()));
             checked[index] = true;
             selected.add(index);
             modifying = true;
@@ -345,7 +344,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     public void drawAllMarkers() {
         clearAllMarkers();
         for (Place place : places){
-            if (isFiltered(place.getEnumType())) {
+            if (isFiltered(place.getType())) {
                 this.drawMarker(place);
             }
         }
@@ -366,7 +365,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
 
     public void drawMarker(Place place) {
         BitmapDescriptor icon = generateIcon(R.drawable.ic_rubbish);
-        switch(place.getEnumType()){
+        switch(place.getType()){
             case PAPER:
                 icon = generateIcon(R.drawable.ic_paper);
                 break;

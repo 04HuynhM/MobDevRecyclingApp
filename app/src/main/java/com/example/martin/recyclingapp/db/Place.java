@@ -1,47 +1,49 @@
 package com.example.martin.recyclingapp.db;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
-import java.util.UUID;
-
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.Exclude;
 
 /**
  * Created by kamai on 24-Mar-18.
  */
-@Entity
+
 public class Place {
 
-    @PrimaryKey
-    @NonNull
+    @Exclude
     private String uid = "";
-    @ColumnInfo(name = "latitude")
     private double latitude;
-    @ColumnInfo(name = "longitude")
+
+
     private double longitude;
-    @ColumnInfo(name = "type")
-    private int type;
+    private PLACE_TYPE type;
 
     public Place(double latitude,
                  double longitude,
                  PLACE_TYPE type) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.type = type.ordinal();
+        this.type = type;
     }
 
     public Place() {
     }
 
-    @NonNull
+    @Exclude
     public String getUid() {
         return this.uid;
     }
 
-    public void setUid(@NonNull String uid) {
+    @Exclude
+    public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public PLACE_TYPE getType() {
+        return this.type;
+    }
+
+    public void setType(PLACE_TYPE type) {
+        this.type = type;
     }
 
     public double getLatitude() {
@@ -60,19 +62,8 @@ public class Place {
         this.longitude = longitude;
     }
 
-    public int getType(){
-        return this.type;
-    }
-
-    public PLACE_TYPE getEnumType() {
-        return PLACE_TYPE.values()[this.getType()];
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
+    @Exclude
     public LatLng getLangLng(){
-        return new LatLng(this.getLatitude(), this.getLongitude());
+        return new LatLng(this.latitude, this.longitude);
     }
 }

@@ -1,9 +1,12 @@
 package com.example.martin.recyclingapp.db;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -16,14 +19,20 @@ import com.google.firebase.database.ValueEventListener;
  * Created by charlie on 2018-03-18.
  */
 
-@Database(entities =  {Item.class, Place.class}, version = 1)
+@Database(entities =  {Item.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2){
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("DROP TABLE place;");
+        }
+    };
 
     private static final String TAG = "AppDatabase";
 
     private static AppDatabase INSTANCE;
 
-    public abstract PlaceDao placeDao();
     public abstract ItemDao itemDao();
 
     public static AppDatabase getAppDatabase(Context context) {
@@ -31,6 +40,7 @@ public abstract class AppDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class,
                     "user-database")
+                            .addMigrations(MIGRATION_1_2)
                             .build();
         }
         return INSTANCE;
