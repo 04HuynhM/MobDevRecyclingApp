@@ -28,11 +28,12 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
+        android:focusable="true"
         android:scaleType="center"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_24dp"
         app:borderWidth="0dp"
         app:layout_constraintBottom_toTopOf="@+id/dummy_marker"
-        app:layout_constraintEnd_toEndOf="parent" android:focusable="true"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/filter_marker"
@@ -43,11 +44,12 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
+        android:focusable="true"
         android:scaleType="center"
-        android:src="@drawable/ic_filter"
+        android:src="@drawable/ic_filter_list_24dp"
         app:borderWidth="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" android:focusable="true"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"

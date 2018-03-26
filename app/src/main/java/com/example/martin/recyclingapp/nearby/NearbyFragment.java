@@ -6,17 +6,24 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.martin.recyclingapp.R;
+import com.example.martin.recyclingapp.db.ConstantsAndUtils;
 import com.example.martin.recyclingapp.db.PLACE_TYPE;
 import com.example.martin.recyclingapp.db.Place;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,6 +35,12 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -42,6 +55,8 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     private float nearRadiusInMeters = 20f;
     private MapView mapView;
     private GoogleMap map;
+    private DatabaseReference firebaseReference;
+    private DatabaseReference placesReference;
     private CharSequence[] categories = new CharSequence[]{
             "Paper",
             "Plastic",
@@ -62,6 +77,51 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        placesReference = FirebaseDatabase.getInstance().getReferenceFromUrl(ConstantsAndUtils.FIREBASE_PLACES);
+        placesReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String key = dataSnapshot.getKey();
+                Place place = dataSnapshot.getValue(Place.class);
+                place.setUid(key);
+                places.add(place);
+                drawAllMarkers();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Place place = dataSnapshot.getValue(Place.class);
+                String key = dataSnapshot.getKey();
+                place.setUid(key);
+                Place oldPlace = places.get(places.indexOf(place));
+                oldPlace.setLatitude(place.getLatitude());
+                oldPlace.setLongitude(place.getLongitude());
+                oldPlace.setType(place.getType());
+                drawAllMarkers();
+            }
+
+
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Place place = dataSnapshot.getValue(Place.class);
+                String key = dataSnapshot.getKey();
+                place.setUid(key);
+                removeMarker(place);
+                drawAllMarkers();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Place place = dataSnapshot.getValue(Place.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("DATABASE", databaseError.toString());
+            }
+        });
 
         FloatingActionButton fab = view.findViewById(R.id.add_marker);
         fab.setOnClickListener(v -> {
@@ -246,7 +306,7 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
                 PLACE_TYPE type;
                 if (isModifying) {
                     for (Place place : nearPlaces) {
-                        removeMarker(place);
+                        placesReference.child(place.getUid()).removeValue();
                     }
                 }
                 int it = 0;
@@ -291,32 +351,45 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    private BitmapDescriptor generateIcon(@DrawableRes int vectorResource){
+        Drawable background = ContextCompat.getDrawable(this.getActivity(), R.drawable.ic_marker_background_48dp);
+        background.setTint(getResources().getColor(R.color.colorPrimary));
+        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Drawable vectorDrawable = ContextCompat.getDrawable(this.getActivity(), vectorResource);
+        vectorDrawable.setBounds(48, 48, background.getIntrinsicWidth() - 48, background.getIntrinsicHeight() - 48);
+        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        background.draw(canvas);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
     public void drawMarker(Place place) {
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_rubbish);
+        BitmapDescriptor icon = generateIcon(R.drawable.ic_rubbish);
         switch(place.getEnumType()){
             case PAPER:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_paper);
+                icon = generateIcon(R.drawable.ic_paper);
                 break;
             case PLASTIC:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_bottle);
+                icon = generateIcon(R.drawable.ic_bottle);
                 break;
             case BURNABLE:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_burnables);
+                icon = generateIcon(R.drawable.ic_burnables);
                 break;
             case BATTERIES:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_battery);
+                icon = generateIcon(R.drawable.ic_battery);
                 break;
             case OIL:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_oil);
+                icon = generateIcon(R.drawable.ic_oil);
                 break;
             case LIGHTBULBS:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_bulb);
+                icon = generateIcon(R.drawable.ic_bulb);
                 break;
             case CAN:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_can);
+                icon = generateIcon(R.drawable.ic_can);
                 break;
             case OTHER:
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_rubbish);
+                icon = generateIcon(R.drawable.ic_rubbish);
                 break;
         }
         map.addMarker(new MarkerOptions()
@@ -327,7 +400,8 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
 
     public Place addMarker(LatLng position, PLACE_TYPE type){
         Place place = new Place(position.latitude, position.longitude, type);
-        places.add(place);
+        placesReference.push().setValue(place);
+        //places.add(place);
         return place;
     }
 

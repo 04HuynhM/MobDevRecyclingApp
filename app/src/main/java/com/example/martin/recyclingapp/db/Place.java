@@ -16,7 +16,7 @@ public class Place {
 
     @PrimaryKey
     @NonNull
-    private String uid;
+    private String uid = "";
     @ColumnInfo(name = "latitude")
     private double latitude;
     @ColumnInfo(name = "longitude")
@@ -27,19 +27,17 @@ public class Place {
     public Place(double latitude,
                  double longitude,
                  PLACE_TYPE type) {
-        this.uid = String.valueOf(UUID.randomUUID());
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = type.ordinal();
     }
 
     public Place() {
-        this.uid = String.valueOf(UUID.randomUUID());
     }
 
     @NonNull
     public String getUid() {
-        return uid;
+        return this.uid;
     }
 
     public void setUid(@NonNull String uid) {

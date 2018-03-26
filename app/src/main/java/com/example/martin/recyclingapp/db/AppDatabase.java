@@ -60,10 +60,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 });
     }
 
-    public void syncPlaceWithFirebase(String uid) {
-
-    }
-
     public static void destroyInstance() {
         INSTANCE = null;
     }
