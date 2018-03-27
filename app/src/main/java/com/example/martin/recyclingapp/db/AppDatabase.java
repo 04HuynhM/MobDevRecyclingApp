@@ -50,7 +50,6 @@ public abstract class AppDatabase extends RoomDatabase {
                         if(dataSnapshot.getChildren() != null) {
                             new Thread(() -> {
                                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-
                                     Item item = ds.getValue(Item.class);
                                     itemDao().insert(item);
                                 }
@@ -74,7 +73,7 @@ public abstract class AppDatabase extends RoomDatabase {
         map.put("productCategory", item.getProductCategory());
         map.put("dateScanned", item.getDateScanned());
         map.put("uid", item.getBarcodeNumber());
-//        map.put("imageUrl", item.getImageUrl());
+        map.put("imageUrl", item.getImageUrl());
 
         ConstantsAndUtils.FIREBASE_USERS_REFERENCE
                 .child(ConstantsAndUtils.USER_UID)

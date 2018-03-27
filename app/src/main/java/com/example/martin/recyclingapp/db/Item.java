@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by charlie on 2018-03-10.
@@ -29,21 +30,23 @@ public class Item {
     private String dateScanned;
     @ColumnInfo(name = "category")
     private String productCategory;
-//    @ColumnInfo
-//    String imageUrl;
+    @ColumnInfo
+    private String imageUrl;
 
     public Item(@NonNull String uid,
                 String barcodeNumber,
                 String productName,
                 String productMaterial,
                 String dateScanned,
-                String category) {
+                String category,
+                @Nullable String imageUrl) {
         this.uid = uid;
         this.barcodeNumber = barcodeNumber;
         this.productName = productName;
         this.productMaterial = productMaterial;
         this.dateScanned = dateScanned;
         this.productCategory = category;
+        this.imageUrl = imageUrl;
     }
 
     public Item() {
@@ -110,9 +113,13 @@ public class Item {
         return productCategory;
     }
 
-//    public String getImageUrl() {
-//        return imageUrl;
-//    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public void setProductCategory(String category) {
         this.productCategory = category;

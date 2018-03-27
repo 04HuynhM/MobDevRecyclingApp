@@ -62,7 +62,7 @@
 
     <RadioGroup
         android:id="@+id/new_item_radiogroup"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
@@ -158,6 +158,20 @@
         android:layout_marginTop="8dp"
         android:text="Add Item"
         app:layout_constraintEnd_toEndOf="@+id/new_item_material"
+        app:layout_constraintTop_toBottomOf="@+id/new_item_imageUrl" />
+
+    <EditText
+        android:id="@+id/new_item_imageUrl"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Image URL (Optional)"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_item_radiogroup" />
 
 </android.support.constraint.ConstraintLayout>

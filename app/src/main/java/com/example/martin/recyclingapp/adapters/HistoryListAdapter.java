@@ -13,6 +13,7 @@ import com.example.martin.recyclingapp.MainActivity;
 import com.example.martin.recyclingapp.R;
 import com.example.martin.recyclingapp.ResultFragment;
 import com.example.martin.recyclingapp.db.Item;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,6 +52,10 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
                     items.get(holder.getAdapterPosition()).getBarcodeNumber());
 
             // Put product image
+            if (items.get(holder.getAdapterPosition()).getImageUrl() != null) {
+                itemBundle.putString("imageUrl",
+                        items.get(holder.getAdapterPosition()).getImageUrl());
+            }
 
             ResultFragment result = new ResultFragment();
             result.setArguments(itemBundle);
@@ -96,6 +101,15 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
                     holder.productCategory.setImageResource(R.drawable.ic_oil);
                     break;
         }
+
+        if(current.getImageUrl() != null) {
+            Picasso.get()
+                   .load(current.getImageUrl())
+                   .resize(90, 90)
+                   .centerCrop()
+                   .into(holder.productImage);
+        }
+
     }
 
     @Override
@@ -116,7 +130,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             productName = itemView.findViewById(R.id.historyProductName);
             productMaterial = itemView.findViewById(R.id.historyMaterialTextView);
             dateScanned = itemView.findViewById(R.id.historyScanDate);
-            //productImage = itemView.findViewById(R.id.productHistoryImage);
+            productImage = itemView.findViewById(R.id.productHistoryImage);
             productCategory = itemView.findViewById(R.id.historyCategoryImage);
         }
     }
