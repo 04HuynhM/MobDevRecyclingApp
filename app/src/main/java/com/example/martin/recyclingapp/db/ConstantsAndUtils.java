@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by charlie on 2018-03-11.
  */
 
+//TODO Divide these into packages as Utils and Constants
 public class ConstantsAndUtils {
 
     public static final String FIREBASE_USERS = "https://recycling-app-hkr.firebaseio.com/Users";

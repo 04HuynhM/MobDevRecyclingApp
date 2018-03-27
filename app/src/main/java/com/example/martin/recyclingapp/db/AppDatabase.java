@@ -22,15 +22,8 @@ import java.util.Map;
  * Created by charlie on 2018-03-18.
  */
 
-@Database(entities =  {Item.class}, version = 2)
+@Database(entities =  {Item.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-
-    static final Migration MIGRATION_1_2 = new Migration(1, 2){
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("DROP TABLE place;");
-        }
-    };
 
     private static final String TAG = "AppDatabase";
 
@@ -43,7 +36,6 @@ public abstract class AppDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class,
                     "user-database")
-                            .addMigrations(MIGRATION_1_2)
                             .build();
         }
         return INSTANCE;
@@ -98,10 +90,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 .setValue(mapForFirebase);
 
         syncUserWithFirebase();
-    }
-
-    public void syncPlaceWithFirebase(String uid) {
-
     }
 
     public static void destroyInstance() {
