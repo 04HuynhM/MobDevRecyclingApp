@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.martin.recyclingapp.db.AppDatabase;
 import com.example.martin.recyclingapp.db.ConstantsAndUtils;
 import com.example.martin.recyclingapp.db.Item;
 import com.facebook.CallbackManager;
@@ -60,9 +58,9 @@ public class ResultFragment extends Fragment {
         ImageView productImage = view.findViewById(R.id.resultProductImageView);
 
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm, dd/MM",
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd/MM",
                 getResources().getConfiguration().locale);
-        String currentDate = sdf.format(date);
+        String currentDate = simpleDateFormat.format(date);
 
         if (bundle.containsKey("name")) {
             String categoryString = bundle.getString("category");

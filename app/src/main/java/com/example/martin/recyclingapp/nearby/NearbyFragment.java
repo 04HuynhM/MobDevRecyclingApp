@@ -70,13 +70,18 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nearby, container, false);
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        placesReference = FirebaseDatabase.getInstance().getReferenceFromUrl(ConstantsAndUtils.FIREBASE_PLACES);
+        placesReference = FirebaseDatabase
+                .getInstance()
+                .getReferenceFromUrl(ConstantsAndUtils.FIREBASE_PLACES);
+
         placesReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -142,10 +147,20 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.getUiSettings().setMyLocationButtonEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+
+        if (ActivityCompat.checkSelfPermission(this.getActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this.getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
             return;
         }
+
         map.setMyLocationEnabled(true);
         MapsInitializer.initialize(this.getActivity());
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPos(), 17));
@@ -153,9 +168,22 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private LatLng curPos() {
-        LocationManager lm = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        LocationManager lm = (LocationManager) this.getActivity()
+                .getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this.getActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this.getActivity(),
+                            new String[]
+                                    { Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION },
+                            0);
+
             return new LatLng(0.0, 0.0);
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -173,13 +201,26 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
         return results;
     }
 
-    private LatLng coordInCircle(double lat, double lon, double radius, double part, double total){
+    private LatLng coordInCircle(double lat,
+                                 double lon,
+                                 double radius,
+                                 double part,
+                                 double total){
+
         lat = Math.toRadians(lat);
         lon = Math.toRadians(lon);
         double d = radius / EARTH_RADIUS;
         double r = Math.toRadians((part / total) * 360.0);
-        double newLat = Math.asin(Math.sin(lat) * Math.cos(d) + Math.cos(lat) * Math.sin(d) * Math.cos(r));
-        double newLon = lon + Math.atan2(Math.sin(r) * Math.sin(d) * Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(newLat));
+
+        double newLat = Math.asin(Math.sin(lat) *
+                Math.cos(d) +
+                Math.cos(lat) *
+                        Math.sin(d) *
+                        Math.cos(r));
+
+        double newLon = lon + Math.atan2(Math.sin(r) * Math.sin(d) * Math.cos(lat),
+                Math.cos(d) - Math.sin(lat) * Math.sin(newLat));
+
         return new LatLng(Math.toDegrees(newLat), Math.toDegrees(newLon));
     }
 
@@ -311,7 +352,14 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
                 for (Object _index : selected){
                     int index = (int) _index;
                     type = catToType(categories[index]);
-                    addMarker(coordInCircle(cur.latitude, cur.longitude, nearRadiusInMeters / 2f, ++it, total ), type);
+                    addMarker(
+                            coordInCircle(
+                                    cur.latitude,
+                                    cur.longitude,
+                                    nearRadiusInMeters / 2f,
+                                    ++it,
+                                    total),
+                            type);
                 }
                 drawAllMarkers();
             })
@@ -350,12 +398,30 @@ public class NearbyFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private BitmapDescriptor generateIcon(@DrawableRes int vectorResource){
-        Drawable background = ContextCompat.getDrawable(this.getActivity(), R.drawable.ic_marker_background_48dp);
+
+        Drawable background = ContextCompat.getDrawable(
+                this.getActivity(),
+                R.drawable.ic_marker_background_48dp);
+
         background.setTint(getResources().getColor(R.color.colorPrimary));
-        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
-        Drawable vectorDrawable = ContextCompat.getDrawable(this.getActivity(), vectorResource);
-        vectorDrawable.setBounds(48, 48, background.getIntrinsicWidth() - 48, background.getIntrinsicHeight() - 48);
-        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        background.setBounds(0,
+                0,
+                background.getIntrinsicWidth(),
+                background.getIntrinsicHeight());
+
+        Drawable vectorDrawable = ContextCompat
+                .getDrawable(this.getActivity(), vectorResource);
+
+        vectorDrawable.setBounds(48,
+                48,
+                background.getIntrinsicWidth() - 48,
+                background.getIntrinsicHeight() - 48);
+
+        Bitmap bitmap = Bitmap
+                .createBitmap(background.getIntrinsicWidth(),
+                        background.getIntrinsicHeight(),
+                        Bitmap.Config.ARGB_8888);
+
         Canvas canvas = new Canvas(bitmap);
         background.draw(canvas);
         vectorDrawable.draw(canvas);
