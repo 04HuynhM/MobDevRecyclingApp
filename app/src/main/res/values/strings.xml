@@ -21,4 +21,12 @@
     <string name="results_date_scanned">Date Scanned</string>
     <string name="results_barcode">Barcode</string>
 
+    <!--Overall fragment-->
+    <string name="scanned_number_user">Number of items scanned by you</string>
+    <string name="scanned_number_global">Number of items scanned</string>
+    <string name="scanned_most_material">Most scanned material</string>
+    <string name="title_scanned_statistics_age">Number of scanned items by age group</string>
+    <string name="header_guide_overall">Learn more about waste separation on
+        \n<a href="http://www.affarsverken.se/sortera">Affärsverken website</a></string>
+
 </resources>

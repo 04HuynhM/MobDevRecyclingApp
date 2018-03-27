@@ -14,7 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="0dp"
@@ -26,8 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Scan Barcode" />
-
+        app:title="Scan Barcode"
+        app:titleTextColor="@color/white" />
     <ImageView
         android:id="@+id/cameraBox"
         android:layout_width="300dp"
@@ -42,7 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/top"
         android:layout_width="0dp"
@@ -53,7 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/left"
         android:layout_width="0dp"
@@ -64,7 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top"
         tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/bottom"
         android:layout_width="0dp"
@@ -75,7 +71,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cameraBox"
         tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/right"
         android:layout_width="0dp"

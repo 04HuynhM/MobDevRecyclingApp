@@ -57,6 +57,7 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
     compile 'biz.kasual:materialnumberpicker:1.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
