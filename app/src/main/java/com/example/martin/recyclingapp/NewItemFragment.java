@@ -2,7 +2,6 @@ package com.example.martin.recyclingapp;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.martin.recyclingapp.db.AppDatabase;
 import com.example.martin.recyclingapp.db.Item;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 /**
@@ -34,8 +32,10 @@ public class NewItemFragment extends Fragment {
         TextView barcode = v.findViewById(R.id.new_item_barcode);
         EditText name = v.findViewById(R.id.new_item_name);
         EditText material = v.findViewById(R.id.new_item_material);
+        EditText imageUrl = v.findViewById(R.id.new_item_imageUrl);
         RadioGroup boxGroup = v.findViewById(R.id.new_item_radiogroup);
         Button addItemButton = v.findViewById(R.id.add_item_button);
+
 
 
         Bundle bundle = getArguments();
@@ -87,7 +87,8 @@ public class NewItemFragment extends Fragment {
                                     name.getText().toString(),
                                     material.getText().toString(),
                                     currentDate,
-                                    categoryBuilder.toString());
+                                    categoryBuilder.toString(),
+                                    imageUrl.getText().toString());
 
                             AppDatabase.getAppDatabase(getActivity())
                                     .addItemToFirebaseUser(item);
@@ -105,6 +106,8 @@ public class NewItemFragment extends Fragment {
                                     item.getProductMaterial());
                             resultBundle.putString("barcode",
                                     item.getBarcodeNumber());
+                            resultBundle.putString("imageUrl",
+                                    item.getImageUrl());
 
                             fragment.setArguments(resultBundle);
 

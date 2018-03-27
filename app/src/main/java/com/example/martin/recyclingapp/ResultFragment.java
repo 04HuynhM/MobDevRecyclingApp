@@ -28,6 +28,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,7 +60,7 @@ public class ResultFragment extends Fragment {
         ImageView productImage = view.findViewById(R.id.resultProductImageView);
 
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM HH:mm",
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm, dd/MM",
                 getResources().getConfiguration().locale);
         String currentDate = sdf.format(date);
 
@@ -100,6 +101,12 @@ public class ResultFragment extends Fragment {
                     break;
             }
 
+            if (bundle.containsKey("imageUrl")) {
+                Picasso.get()
+                        .load(bundle.getString("imageUrl"))
+                        .into(productImage);
+            }
+
         } else {
 
             ConstantsAndUtils.FIREBASE_ITEMS_REFERENCE.child(scannedBarcode)
@@ -109,12 +116,40 @@ public class ResultFragment extends Fragment {
                             if (dataSnapshot.getChildren() != null) {
                                 Item item = dataSnapshot.getValue(Item.class);
                                 if (item != null) {
-                                    Toast.makeText(getActivity(), "firebase item not null", Toast.LENGTH_SHORT).show();
                                     productName.setText(item.getProductName());
                                     category.setText(item.getProductCategory());
                                     dateScanned.setText(currentDate);
                                     barcode.setText(item.getBarcodeNumber());
                                     material.setText(item.getProductMaterial());
+
+                                    if (item.getImageUrl() != null) {
+                                        Picasso.get().load(item.getImageUrl()).into(productImage);
+                                    }
+
+                                    switch (item.getProductCategory()) {
+                                        case "Paper":
+                                            categoryImage.setImageResource(R.drawable.ic_paper);
+                                            break;
+                                        case "Plastic":
+                                            categoryImage.setImageResource(R.drawable.ic_bottle);
+                                            break;
+                                        case "Burnable":
+                                            categoryImage.setImageResource(R.drawable.ic_burnables);
+                                            break;
+                                        case "Lightbulb":
+                                            categoryImage.setImageResource(R.drawable.ic_bulb);
+                                            break;
+                                        case "Battery":
+                                            categoryImage.setImageResource(R.drawable.ic_battery);
+                                            break;
+                                        case "Can":
+                                            categoryImage.setImageResource(R.drawable.ic_can);
+                                            break;
+                                        case "Oil":
+                                            categoryImage.setImageResource(R.drawable.ic_oil);
+                                            break;
+                                    }
+
                                 } else {
                                     showDialog(scannedBarcode, currentDate);
                                 }
