@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             //dialog.show();
+            //TODO add a AuthListener for rebirth
             ConstantsAndUtils.triggerRebirth(this);
         } else {
             Toast.makeText(this, "You are not signed in.", Toast.LENGTH_LONG).show();
